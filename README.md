@@ -1,8 +1,8 @@
-# Comment-box
-This is a readme for your new Budibase plugin.
+# Budibase Comment Box
 
-# Description
-A comment box component for easily adding comments to records
+![](resources/demo.png)
+
+A comment box component for easily adding comments to records.
 
 Find out more about [Budibase](https://github.com/Budibase/budibase).
 
