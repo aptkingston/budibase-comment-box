@@ -1,0 +1,27 @@
+{
+  "type": "component",
+  "metadata": {},
+  "schema": {
+    "name": "comment-box",
+    "friendlyName": "Comment Box",
+    "description": "A comment box component for easily adding comments to records",
+    "icon": "Text",
+    "settings": [
+      {
+        "type": "dataSource",
+        "key": "dataSource",
+        "label": "Table"
+      },
+      {
+        "type": "field",
+        "key": "column",
+        "label": "Column"
+      },
+      {
+        "type": "text",
+        "key": "rowId",
+        "label": "Row ID"
+      }
+    ]
+  }
+}
