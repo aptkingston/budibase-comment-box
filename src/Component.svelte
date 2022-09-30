@@ -36,7 +36,6 @@
   }
 
   const loadComments = async () => {
-    console.log("LOADING!")
     try {
       comments = await getComments()
     } catch (error) {
@@ -68,9 +67,12 @@
   }
 
   const addComment = async () => {
+    if (!text?.trim().length) {
+      return
+    }
     try {
       // Clear state
-      const message = text
+      const message = text.trim()
       text = null
 
       // Create and save new comment
