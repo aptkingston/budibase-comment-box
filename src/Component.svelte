@@ -15,6 +15,7 @@
   let text
   let commentContainer
 
+  $: rowId, loadComments()
   $: currentName = `${$authStore.firstName || ""} ${$authStore.lastName || ""}`.trim()
 
   const getRow = async () => {
@@ -69,18 +70,19 @@
 
   const addComment = async () => {
     try {
+      // Clear state
+      const message = text
+      text = null
+
       // Create and save new comment
       const existingComments = await getComments()
       const newComment = {
-        message: text,
+        message,
         email:  $authStore.email,
         name: currentName,
         timestamp: Date.now()
       }
       await saveComments([...existingComments, newComment])
-
-      // Clear state
-      text = null
     } catch (error) {
       notificationStore.actions.error("Failed to add comment")
       console.error(error)
@@ -101,10 +103,12 @@
     }
   }
 
-  onMount(async () => {
-    await loadComments()
-  })
-
+  const handleKeyPress = e => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      addComment()
+    }
+  }
 </script>
 
 <div use:styleable={$component.styles} class="container">
@@ -118,7 +122,7 @@
   </div>
   <div class="form">
     <Avatar name={currentName} email={$authStore.email} />
-    <textarea bind:value={text} rows="2" placeholder="Add a comment..." />
+    <textarea on:keypress={handleKeyPress} bind:value={text} rows="2" placeholder="Add a comment..." />
     <div />
     <div class="button">
       <button on:click={addComment}>Post</button>
