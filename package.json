@@ -1,7 +1,7 @@
 {
   "name": "comment-box",
-  "version": "1.0.0",
-  "description": "A comment box component for easily adding comments to records",
+  "version": "1.0.1",
+  "description": "A comment box component for Budibase apps",
   "license": "MIT",
   "svelte": "index.js",
   "module": "dist/plugin.min.js",
