@@ -1,5 +1,5 @@
 <script>
-  import { getContext, onMount } from "svelte"
+  import { getContext, afterUpdate } from "svelte"
   import Avatar from "./Avatar.svelte"
   import Comment from "./Comment.svelte"
 
@@ -14,8 +14,9 @@
   let comments = []
   let text
   let commentContainer
+  let lastCommentCount = 0
 
-  $: rowId, loadComments()
+  $: table, column, rowId, loadComments()
   $: currentName = `${$authStore.firstName || ""} ${$authStore.lastName || ""}`.trim()
 
   const getRow = async () => {
@@ -35,14 +36,12 @@
   }
 
   const loadComments = async () => {
+    console.log("LOADING!")
     try {
       comments = await getComments()
     } catch (error) {
       comments = []
     }
-    setTimeout(() => {
-      commentContainer.scrollTop = commentContainer.scrollHeight
-    }, 50)
   }
 
   const saveComments = async comments => {
@@ -109,6 +108,13 @@
       addComment()
     }
   }
+
+  afterUpdate(() => {
+    if (comments.length !== lastCommentCount) {
+      commentContainer.scrollTop = commentContainer.scrollHeight
+      lastCommentCount = comments.length
+    }
+  })
 </script>
 
 <div use:styleable={$component.styles} class="container">
