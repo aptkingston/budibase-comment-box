@@ -15,11 +15,12 @@ Find out more about [Budibase](https://github.com/Budibase/budibase).
 - Press enter to post a comment
 
 ## Usage
-This plugin stores full comment histories, including names and timestamps, inside
+This plugin stores full comment histories, including names and timestamps, encoded inside
 a single text field.
 
 To use this plugin, you'll need to create a column for your comments. If you're using
-an internal table, a simple text column will work perfectly:
+an internal table, a simple text column will work perfectly. If you're using a SQL table,
+simply pick any string-compatible column.
 
 ![](resources/data.png)
 
