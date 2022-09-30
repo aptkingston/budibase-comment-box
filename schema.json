@@ -8,8 +8,8 @@
     "icon": "Comment",
     "settings": [
       {
-        "type": "dataSource",
-        "key": "dataSource",
+        "type": "table",
+        "key": "table",
         "label": "Table"
       },
       {

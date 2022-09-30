@@ -3,7 +3,7 @@
   import Avatar from "./Avatar.svelte"
   import Comment from "./Comment.svelte"
 
-  export let dataSource
+  export let table
   export let column
   export let rowId
 
@@ -19,10 +19,10 @@
   $: currentName = `${$authStore.firstName || ""} ${$authStore.lastName || ""}`.trim()
 
   const getRow = async () => {
-    if (dataSource?.type !== "table" || !dataSource?.tableId || !rowId || !column) {
+    if (!table?.tableId || !rowId || !column) {
       return null
     }
-    return await API.fetchRow({ rowId, tableId: dataSource.tableId })
+    return await API.fetchRow({ rowId, tableId: table.tableId })
   }
 
   const getComments = async () => {
