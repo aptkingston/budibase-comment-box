@@ -5,7 +5,7 @@
     "name": "comment-box",
     "friendlyName": "Comment Box",
     "description": "A comment box component for easily adding comments to records",
-    "icon": "Text",
+    "icon": "Comment",
     "settings": [
       {
         "type": "dataSource",
