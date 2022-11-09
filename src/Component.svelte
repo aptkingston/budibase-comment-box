@@ -32,7 +32,11 @@
     if (typeof value !== "string" || !value?.length) {
       return []
     }
-    return value.split(separator).map(atob).map(JSON.parse) || []
+    return value.split(separator)
+      .map(atob)
+      .map(escape)
+      .map(decodeURIComponent)
+      .map(JSON.parse) || []
   }
 
   const loadComments = async () => {
@@ -49,7 +53,10 @@
     }
     try {
       // Encode the array of comments
-      const encoded = comments.map(JSON.stringify).map(btoa).join(separator)
+      const encoded = comments.map(JSON.stringify)
+        .map(encodeURIComponent)
+        .map(unescape).map(btoa)
+        .join(separator)
 
       // Update row
       const row = await getRow()

@@ -1,6 +1,6 @@
 {
   "name": "comment-box",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A comment box component for Budibase apps",
   "license": "MIT",
   "svelte": "index.js",
