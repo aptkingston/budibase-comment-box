@@ -8,6 +8,7 @@
 
   export let comment
   export let destroy
+  export let dateFormat
 </script>
 
 <div class="comment">
@@ -17,7 +18,7 @@
       <div class="name" title={comment.email}>
         {comment.name || comment.email}
       </div>
-      <div class="date" title={dayjs(comment.timestamp).format("llll")}>
+      <div class="date" title={dayjs(comment.timestamp).format(dateFormat)}>
         {dayjs(comment.timestamp).fromNow()}
       </div>
       <div class="delete" on:click={destroy}>

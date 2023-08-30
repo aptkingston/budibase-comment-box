@@ -21,6 +21,12 @@
         "type": "text",
         "key": "rowId",
         "label": "Row ID"
+      },
+      {
+        "type": "text",
+        "key": "dateFormat",
+        "label": "Date format",
+        "default": "llll"
       }
     ]
   }
