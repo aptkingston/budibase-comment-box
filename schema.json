@@ -21,6 +21,31 @@
         "type": "text",
         "key": "rowId",
         "label": "Row ID"
+      },
+      {
+        "type": "text",
+        "key": "itemName",
+        "label": "Item name",
+        "default": "comment"
+      },
+      {
+        "type": "text",
+        "key": "itemNamePlural",
+        "label": "Item name (plural)",
+        "default": "comments"
+      },
+      {
+        "type": "text",
+        "key": "messagePlaceholder",
+        "label": "Message placeholder",
+        "default": "Add a comment..."
+      }
+      ,
+      {
+        "type": "text",
+        "key": "buttonText",
+        "label": "Button text",
+        "default": "Post"
       }
     ]
   }
