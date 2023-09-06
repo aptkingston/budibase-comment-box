@@ -39,13 +39,22 @@
         "key": "messagePlaceholder",
         "label": "Message placeholder",
         "defaultValue": "Add a comment..."
-      }
-      ,
+      },
       {
         "type": "text",
         "key": "buttonText",
         "label": "Button text",
         "defaultValue": "Post"
+       },
+        "type": "boolean",
+        "key": "dateRelative",
+        "label": "Show absolute date?"
+      },
+      {
+        "type": "text",
+        "key": "dateFormat",
+        "label": "Date format",
+        "defaultValue": "llll"
       }
     ]
   }

@@ -7,7 +7,8 @@
   export let column
   export let rowId
   export let itemName, itemNamePlural, messagePlaceholder, buttonText
-
+  export let dateFormat, dateRelative
+  
   const { styleable, API, authStore, notificationStore } = getContext("sdk")
   const component = getContext("component")
   const separator = "|"
@@ -19,6 +20,7 @@
 
   $: table, column, rowId, loadComments()
   $: itemName, itemNamePlural, messagePlaceholder, buttonText
+  $: dateFormat, dateRelative
   $: currentName = `${$authStore.firstName || ""} ${$authStore.lastName || ""}`.trim()
 
   const getRow = async () => {
@@ -134,7 +136,7 @@
   </div>
   <div class="comments" bind:this={commentContainer}>
     {#each comments as comment (comment.timestamp)}
-      <Comment {comment} destroy={() => deleteComment(comment)} />
+      <Comment {comment} destroy={() => deleteComment(comment)} dateFormat={dateFormat} dateRelative={dateRelative} />
     {/each}
   </div>
   <div class="form">
