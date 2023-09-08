@@ -8,7 +8,10 @@
 
   export let comment
   export let destroy
-  export let dateFormat, dateRelative
+  export let dateFormat
+  export let absDates = false
+
+  $: format = dateFormat || "llll"
 </script>
 
 <div class="comment">
@@ -18,8 +21,8 @@
       <div class="name" title={comment.email}>
         {comment.name || comment.email}
       </div>
-      <div class="date" title={dayjs(comment.timestamp).format(dateFormat)}>
-        {dateRelative ? dayjs(comment.timestamp).format(dateFormat) : dayjs(comment.timestamp).fromNow()}
+      <div class="date" title={dayjs(comment.timestamp).format(format)}>
+        {absDates ? dayjs(comment.timestamp).format(format) : dayjs(comment.timestamp).fromNow()}
       </div>
       <div class="delete" on:click={destroy}>
         ✕
