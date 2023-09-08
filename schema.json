@@ -21,6 +21,17 @@
         "type": "text",
         "key": "rowId",
         "label": "Row ID"
+      },
+      {
+        "type": "boolean",
+        "key": "dateRelative",
+        "label": "Show absolute date?"
+      },
+      {
+        "type": "text",
+        "key": "dateFormat",
+        "label": "Date format",
+        "defaultValue": "llll"
       }
     ]
   }
