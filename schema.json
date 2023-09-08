@@ -24,14 +24,15 @@
       },
       {
         "type": "boolean",
-        "key": "dateRelative",
-        "label": "Show absolute date?"
+        "key": "absDates",
+        "label": "Absolute dates"
       },
       {
         "type": "text",
         "key": "dateFormat",
         "label": "Date format",
-        "defaultValue": "llll"
+        "defaultValue": "llll",
+        "dependsOn": "absDates"
       }
     ]
   }
