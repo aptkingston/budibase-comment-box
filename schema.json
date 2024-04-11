@@ -33,6 +33,18 @@
         "label": "Date format",
         "defaultValue": "llll",
         "dependsOn": "absDates"
+      },
+      {
+        "type": "boolean",
+        "key": "disableAdding",
+        "label": "Disable adding",
+        "defaultValue": false
+      },
+      {
+        "type": "boolean",
+        "key": "disableDeleting",
+        "label": "Disable deleting",
+        "defaultValue": false
       }
     ]
   }

@@ -1,36 +1,36 @@
 <script>
-  import Avatar from "./Avatar.svelte"
-  import dayjs from "dayjs"
-  import relativeTime from "dayjs/plugin/relativeTime"
-  import localizedFormat from "dayjs/plugin/localizedFormat"
-  dayjs.extend(relativeTime)
-  dayjs.extend(localizedFormat)
+  import Avatar from "./Avatar.svelte";
+  import dayjs from "dayjs";
+  import relativeTime from "dayjs/plugin/relativeTime";
+  import localizedFormat from "dayjs/plugin/localizedFormat";
+  dayjs.extend(relativeTime);
+  dayjs.extend(localizedFormat);
 
-  export let comment
-  export let destroy
-  export let dateFormat
-  export let absDates = false
+  export let comment;
+  export let destroy;
+  export let dateFormat;
+  export let absDates = false;
+  export let deletable = true;
 
-  $: format = dateFormat || "llll"
+  $: format = dateFormat || "llll";
 </script>
 
 <div class="comment">
-  <Avatar name={comment.name} email={comment.email} />
+  <Avatar name="{comment.name}" email="{comment.email}" />
   <div class="body">
     <div class="title">
-      <div class="name" title={comment.email}>
+      <div class="name" title="{comment.email}">
         {comment.name || comment.email}
       </div>
-      <div class="date" title={dayjs(comment.timestamp).format(format)}>
-        {absDates ? dayjs(comment.timestamp).format(format) : dayjs(comment.timestamp).fromNow()}
+      <div class="date" title="{dayjs(comment.timestamp).format(format)}">
+        {absDates ? dayjs(comment.timestamp).format(format) :
+        dayjs(comment.timestamp).fromNow()}
       </div>
-      <div class="delete" on:click={destroy}>
-        ✕
-      </div>
+      {#if deletable}
+      <div class="delete" on:click="{destroy}">✕</div>
+      {/if}
     </div>
-    <div class="text">
-      {comment.message}
-    </div>
+    <div class="text">{comment.message}</div>
   </div>
 </div>
 
@@ -68,7 +68,7 @@
     flex: 1 1 auto;
   }
   .delete {
-    color:  var(--spectrum-global-color-gray-400);
+    color: var(--spectrum-global-color-gray-400);
     display: none;
     transition: color 130ms ease-out;
   }
@@ -83,4 +83,3 @@
     word-wrap: anywhere;
   }
 </style>
-

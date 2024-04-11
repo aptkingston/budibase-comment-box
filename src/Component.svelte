@@ -8,6 +8,8 @@
   export let rowId
   export let dateFormat
   export let dateRelative
+  export let disableAdding = false
+  export let disableDeleting = false
 
   const { styleable, API, authStore, notificationStore } = getContext("sdk")
   const component = getContext("component")
@@ -20,10 +22,10 @@
 
   $: table, column, rowId, loadComments()
   $: dateFormat, dateRelative
-  $: currentName = `${$authStore.firstName || ""} ${$authStore.lastName || ""}`.trim()
+  $: currentName = `${$authStore?.firstName || ""} ${$authStore?.lastName || ""}`.trim()
 
   const getRow = async () => {
-    if (!table?.tableId || !rowId || !column) {
+   if (!table?.tableId || !rowId || !column) {
       return null
     }
     return await API.fetchRow({ rowId, tableId: table.tableId })
@@ -89,7 +91,7 @@
       const existingComments = await getComments()
       const newComment = {
         message,
-        email:  $authStore.email,
+        email:  $authStore?.email,
         name: currentName,
         timestamp: Date.now()
       }
@@ -135,17 +137,19 @@
   </div>
   <div class="comments" bind:this={commentContainer}>
     {#each comments as comment (comment.timestamp)}
-      <Comment {comment} destroy={() => deleteComment(comment)} dateFormat={dateFormat} dateRelative={dateRelative} />
+      <Comment {comment} deletable={!disableDeleting} destroy={() => deleteComment(comment)} dateFormat={dateFormat} dateRelative={dateRelative} />
     {/each}
   </div>
-  <div class="form">
-    <Avatar name={currentName} email={$authStore.email} />
-    <textarea on:keypress={handleKeyPress} bind:value={text} rows="2" placeholder="Add a comment..." />
-    <div />
-    <div class="button">
-      <button on:click={addComment}>Post</button>
+  {#if !disableAdding}
+    <div class="form">
+      <Avatar name={currentName} email={$authStore?.email} />
+      <textarea on:keypress={handleKeyPress} bind:value={text} rows="2" placeholder="Add a comment..." />
+      <div />
+      <div class="button">
+        <button on:click={addComment}>Post</button>
+      </div>
     </div>
-  </div>
+  {/if}
 </div>
 
 <style>
