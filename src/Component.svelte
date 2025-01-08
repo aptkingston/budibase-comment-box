@@ -22,13 +22,14 @@
 
   $: table, column, rowId, loadComments()
   $: dateFormat, dateRelative
-  $: currentName = `${$authStore?.firstName || ""} ${$authStore?.lastName || ""}`.trim()
+  $: currentName =
+    `${$authStore?.firstName || ""} ${$authStore?.lastName || ""}`.trim()
 
   const getRow = async () => {
-   if (!table?.tableId || !rowId || !column) {
+    if (!table?.tableId || !rowId || !column) {
       return null
     }
-    return await API.fetchRow({ rowId, tableId: table.tableId })
+    return await API.fetchRow(table.tableId, rowId)
   }
 
   const getComments = async () => {
@@ -37,11 +38,14 @@
     if (typeof value !== "string" || !value?.length) {
       return []
     }
-    return value.split(separator)
-      .map(atob)
-      .map(escape)
-      .map(decodeURIComponent)
-      .map(JSON.parse) || []
+    return (
+      value
+        .split(separator)
+        .map(atob)
+        .map(escape)
+        .map(decodeURIComponent)
+        .map(JSON.parse) || []
+    )
   }
 
   const loadComments = async () => {
@@ -52,22 +56,24 @@
     }
   }
 
-  const saveComments = async comments => {
+  const saveComments = async (comments) => {
     if (!Array.isArray(comments)) {
       return null
     }
     try {
       // Encode the array of comments
-      const encoded = comments.map(JSON.stringify)
+      const encoded = comments
+        .map(JSON.stringify)
         .map(encodeURIComponent)
-        .map(unescape).map(btoa)
+        .map(unescape)
+        .map(btoa)
         .join(separator)
 
       // Update row
       const row = await getRow()
       await API.saveRow({
         ...row,
-        [column]: encoded
+        [column]: encoded,
       })
 
       // Refresh from the server to ensure we're consistent, and to update UI
@@ -91,9 +97,9 @@
       const existingComments = await getComments()
       const newComment = {
         message,
-        email:  $authStore?.email,
+        email: $authStore?.email,
         name: currentName,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       }
       await saveComments([...existingComments, newComment])
     } catch (error) {
@@ -102,21 +108,23 @@
     }
   }
 
-  const deleteComment = async comment => {
+  const deleteComment = async (comment) => {
     if (!comment?.timestamp) {
       return
     }
     try {
       // Fetch existing comments and filter out this one
       const existingComments = await getComments()
-      await saveComments(existingComments.filter(x => x.timestamp !== comment.timestamp))
+      await saveComments(
+        existingComments.filter((x) => x.timestamp !== comment.timestamp),
+      )
     } catch (error) {
       notificationStore.actions.error("Failed to delete comment")
       console.error(error)
     }
   }
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault()
       addComment()
@@ -137,13 +145,24 @@
   </div>
   <div class="comments" bind:this={commentContainer}>
     {#each comments as comment (comment.timestamp)}
-      <Comment {comment} deletable={!disableDeleting} destroy={() => deleteComment(comment)} dateFormat={dateFormat} dateRelative={dateRelative} />
+      <Comment
+        {comment}
+        deletable={!disableDeleting}
+        destroy={() => deleteComment(comment)}
+        {dateFormat}
+        {dateRelative}
+      />
     {/each}
   </div>
   {#if !disableAdding}
     <div class="form">
       <Avatar name={currentName} email={$authStore?.email} />
-      <textarea on:keypress={handleKeyPress} bind:value={text} rows="2" placeholder="Add a comment..." />
+      <textarea
+        on:keypress={handleKeyPress}
+        bind:value={text}
+        rows="2"
+        placeholder="Add a comment..."
+      />
       <div />
       <div class="button">
         <button on:click={addComment}>Post</button>
