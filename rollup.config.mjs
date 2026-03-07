@@ -7,7 +7,7 @@ import svg from "rollup-plugin-svg"
 import json from "rollup-plugin-json"
 import nodePolyfills from "rollup-plugin-polyfill-node"
 import copy2 from "rollup-plugin-copy2"
-import tar from "tar"
+import { create } from "tar"
 import fs from "fs"
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
 import crypto from "crypto"
@@ -60,8 +60,7 @@ const hash = () => ({
 const bundle = () => ({
   async writeBundle() {
     const bundleName = `${pkg.name}-${pkg.version}.tar.gz`
-    return tar
-        .c({ gzip: true, cwd: "dist" }, [
+    return create({ gzip: true, cwd: "dist" }, [
           "plugin.min.js",
           "schema.json",
           "package.json",
